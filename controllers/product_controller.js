@@ -1,5 +1,9 @@
-function index(req, res) {
-    res.send(`show all products`);
+const ProductModel = require(`./../database/models/product_model`);
+
+//async means there will be an await call at some point in this function
+async function index(req, res) {
+    const products = await ProductModel.find();
+    res.render(`products/index`, { products });
 };
 
 function show(req, res) {
