@@ -7,15 +7,24 @@ async function index(req, res) {
 };
 
 function show(req, res) {
-    res.send(`show single product`);
+    // const {id} = req.params;
+    // const products = await ProductModel.findById(id);
+    // res.render(`products/show`, { product });
+
+    //Line below is shorthand for 3 lines above
+    res.render(`products/show`, { product: req.product });
 };
 
 function make(req, res) {
-    res.send(`show form to make new product`);
+    res.render(`products/make`);
 };
 
-function create(req, res) {
-    res.send(`show form to make new product`);
+async function create(req, res) {
+    const { name, categories, price } = req.body;
+    const product = await ProductModel.create({ name, categories, price });
+
+    res.redirect(`/products/${product.id}`);
+
 };
 
 function update(req, res) {
@@ -27,7 +36,10 @@ function destroy(req, res) {
 };
 
 function edit(req, res) {
-    res.send(`show form to make new product`);
+    const {id} = req.params;
+    const product = ProductModel.findById(id);
+
+    res.render(`products/edit`, { product });
 };
 
 module.exports = {
